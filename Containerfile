@@ -1,7 +1,5 @@
 FROM docker.io/library/ubuntu:mantic
 
-ARG RYE_EXE_PATH=target/x86_64-unknown-linux-gnu/debug/rye
-
 RUN apt-get update -y && \
     apt-get install -y \
       bats \
@@ -9,6 +7,8 @@ RUN apt-get update -y && \
       ca-certificates && \
     apt-get clean -y
 
+ARG RYE_EXE_PATH
+ARG RYE_EXE_HASH
 ENV RYE_HOME=/opt/rye
 RUN --mount=type=bind,source=${RYE_EXE_PATH},target=/tmp/rye \
     /tmp/rye self install --yes
